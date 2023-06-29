@@ -3,8 +3,10 @@ package io.phasetwo.service.resource;
 import static io.phasetwo.service.resource.Converters.*;
 import static io.phasetwo.service.resource.OrganizationResourceType.ORGANIZATION_ROLE_MAPPING;
 
+import io.phasetwo.service.model.InvitationModel;
 import io.phasetwo.service.model.OrganizationModel;
 import io.phasetwo.service.model.OrganizationRoleModel;
+import io.phasetwo.service.representation.Invitation;
 import io.phasetwo.service.representation.Organization;
 import io.phasetwo.service.representation.OrganizationRole;
 
@@ -82,7 +84,6 @@ public class UserResource extends OrganizationAdminResource {
       }
       if (!role.hasRole(user)) {
         role.grantRole(user);
-
         adminEvent
                 .resource(ORGANIZATION_ROLE_MAPPING.name())
                 .operation(OperationType.CREATE)
@@ -139,6 +140,23 @@ public class UserResource extends OrganizationAdminResource {
       throw new NotAuthorizedException("Insufficient permissions");
     }
   }
+
+  @GET
+  @Path("/{userId}/orgs/invitations")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Stream<Invitation> listUserOrgInvitations(
+    @PathParam("userId") String userId) {
+    log.debugv("Get user invitation for %s %s", realm.getName(), userId);
+
+    UserModel user = session.users().getUserById(realm, userId);
+    Stream<InvitationModel> inv = orgs.getUserInvitationsStream(realm, user);
+      if (user != null) {
+          return inv.map(r -> convertInvitationModelToInvitation(r));
+      } else {
+        throw new NotFoundException(String.format("User %s doesn't exist", userId));
+      }
+  }
+
   /*
   teams is on hold for now
 
