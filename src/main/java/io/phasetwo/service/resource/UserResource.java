@@ -149,12 +149,12 @@ public class UserResource extends OrganizationAdminResource {
     log.debugv("Get user invitation for %s %s", realm.getName(), userId);
 
     UserModel user = session.users().getUserById(realm, userId);
-    Stream<InvitationModel> inv = orgs.getUserInvitationsStream(realm, user);
-      if (user != null) {
-          return inv.map(r -> convertInvitationModelToInvitation(r));
-      } else {
-        throw new NotFoundException(String.format("User %s doesn't exist", userId));
-      }
+    if (user != null) {
+      Stream<InvitationModel> inv = orgs.getUserInvitationsStream(realm, user);
+      return inv.map(r -> convertInvitationModelToInvitation(r));
+    } else {
+      throw new NotFoundException(String.format("User %s doesn't exist", userId));
+    }
   }
 
   /*
