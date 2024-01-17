@@ -1,6 +1,5 @@
 package io.phasetwo.service.resource;
 
-import static io.phasetwo.service.resource.Converters.*;
 import static io.phasetwo.service.resource.OrganizationResourceType.*;
 import static org.keycloak.models.utils.ModelToRepresentation.*;
 
