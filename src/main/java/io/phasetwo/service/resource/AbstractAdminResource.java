@@ -1,13 +1,13 @@
 package io.phasetwo.service.resource;
 
+import jakarta.ws.rs.NotAuthorizedException;
+import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.UriInfo;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import javax.ws.rs.NotAuthorizedException;
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.UriInfo;
 import lombok.extern.jbosslog.JBossLog;
 import org.jboss.resteasy.annotations.cache.NoCache;
 import org.keycloak.Config;
@@ -61,7 +61,7 @@ public abstract class AbstractAdminResource<T extends AdminAuth> {
     this.permissions = parent.permissions;
     this.adminEvent = parent.adminEvent;
     this.user = parent.user;
-    this.adminRealm = adminRealm;
+    this.adminRealm = parent.adminRealm;
   }
 
   public final void setup() {

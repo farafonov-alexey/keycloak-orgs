@@ -2,9 +2,9 @@ package io.phasetwo.service.auth.idp;
 
 import java.net.URI;
 import java.util.List;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriBuilder;
 import lombok.extern.jbosslog.JBossLog;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.authentication.AuthenticationFlowContext;
@@ -39,7 +39,7 @@ public class IdpSelectorAuthenticator implements Authenticator {
   }
 
   private void redirect(AuthenticationFlowContext context, String providerId) {
-    IdentityProviderModel identityProvider = context.getRealm().getIdentityProviderByAlias​(providerId);
+    IdentityProviderModel identityProvider = context.getRealm().getIdentityProviderByAlias(providerId);
     if (identityProvider != null && identityProvider.isEnabled()) {
       new Redirector(context).redirectTo(identityProvider);
         /*
@@ -78,7 +78,7 @@ public class IdpSelectorAuthenticator implements Authenticator {
               .getAuthenticationSession()
               .setAuthNote(AuthenticationProcessor.FORWARDED_PASSIVE_LOGIN, "true");
         }
-        
+
         log.debugf("Redirecting to %s", providerId);
         context.forceChallenge(response);
         */

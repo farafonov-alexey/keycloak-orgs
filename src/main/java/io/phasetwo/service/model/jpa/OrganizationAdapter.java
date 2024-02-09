@@ -13,13 +13,13 @@ import io.phasetwo.service.model.jpa.entity.OrganizationAttributeEntity;
 import io.phasetwo.service.model.jpa.entity.OrganizationEntity;
 import io.phasetwo.service.model.jpa.entity.OrganizationMemberEntity;
 import io.phasetwo.service.model.jpa.entity.OrganizationRoleEntity;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import org.keycloak.common.util.MultivaluedHashMap;
 import org.keycloak.models.IdentityProviderModel;
 import org.keycloak.models.KeycloakSession;
@@ -191,7 +191,7 @@ public class OrganizationAdapter implements OrganizationModel, JpaModel<Organiza
     return org.getMembers().stream()
         .map(m -> m.getUserId())
         .map(uid -> session.users().getUserById(realm, uid))
-        .filter(u -> u.getServiceAccountClientLink() == null);
+        .filter(u -> u != null && u.getServiceAccountClientLink() == null);
   }
 
   @Override

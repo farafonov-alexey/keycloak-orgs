@@ -3,14 +3,13 @@ package io.phasetwo.service.representation;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Lists;
+import jakarta.validation.Valid;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.TimeZone;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
 
 public class Invitation {
   private @Valid String id = null;
@@ -136,6 +135,8 @@ public class Invitation {
   }
 
   @JsonProperty("teams")
+  @JsonIgnore // ignore field "teams" because it is not present in InvitationRepresentation (class
+  // io.phasetwo.client.openapi.model.InvitationRepresentation)
   public List<String> getTeamIds() {
     return teamIds;
   }
@@ -183,13 +184,12 @@ public class Invitation {
         && Objects.equals(organizationId, invitation.organizationId)
         && Objects.equals(invitationUrl, invitation.invitationUrl)
         && Objects.equals(roles, invitation.roles)
-        && Objects.equals(roles, invitation.roles);
+        && Objects.equals(teamIds, invitation.teamIds);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(
-        id, email, createdAt, inviterId, organizationId, invitationUrl, teamIds, roles);
+    return Objects.hash(id, email, createdAt, inviterId, organizationId, invitationUrl, roles);
   }
 
   @Override

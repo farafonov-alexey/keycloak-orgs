@@ -1,4 +1,4 @@
-> :rocket: **Try it for free** in the new Phase Two [keycloak managed service](https://phasetwo.io/dashboard/?utm_source=github&utm_medium=readme&utm_campaign=keycloak-orgs). See the [announcement and demo video](https://phasetwo.io/blog/self-service/) for more information.
+> :rocket: **Try it for free** in the new Phase Two [keycloak managed service](https://phasetwo.io/?utm_source=github&utm_medium=readme&utm_campaign=keycloak-orgs). See the [announcement and demo video](https://phasetwo.io/blog/self-service/) for more information.
 
 # Organizations for Keycloak
 
@@ -79,7 +79,8 @@ The maven build uses the shade plugin to package a fat-jar with all dependencies
 
 During the first run, some initial migrations steps will occur:
 
-- Database migrations will be run to add the tables for use by the JPA entities. These have been tested with SQL Server, MySQL, H2, and Postgres. Other database types may fail.
+- Database migrations will be run to add the tables for use by the JPA entities. These have been tested with SQL Server,
+  MySQL, MariaDB, H2, and Postgres. Other database types may fail.
 - Initial `realm-management` client roles (`view-organizations` and `manage-organizations`) will be be added to each realm.
 
 ### Admin UI
@@ -195,4 +196,6 @@ We’ve changed the license of our core extensions from the AGPL v3 to the [Elas
 
 -----
 
-All documentation, source code and other files in this repository are Copyright 2023 Phase Two, Inc.
+Portions of the [Home IdP Discovery](https://github.com/p2-inc/keycloak-orgs/tree/main/src/main/java/io/phasetwo/service/auth/idp) code are Copyright (c) 2021-2023 Sven-Torben Janus, and are licensed under the [MIT License](https://github.com/p2-inc/keycloak-orgs/blob/main/src/main/java/io/phasetwo/service/auth/idp/LICENSE.md).
+
+All other ocumentation, source code and other files in this repository are Copyright 2023 Phase Two, Inc.

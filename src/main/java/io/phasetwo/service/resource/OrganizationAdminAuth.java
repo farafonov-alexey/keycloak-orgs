@@ -8,9 +8,9 @@ import io.phasetwo.service.model.jpa.entity.InvitationEntity;
 import io.phasetwo.service.model.jpa.entity.OrganizationEntity;
 import io.phasetwo.service.model.jpa.entity.OrganizationMemberEntity;
 import io.phasetwo.service.model.jpa.entity.TeamEntity;
+import jakarta.ws.rs.NotAuthorizedException;
 import java.util.List;
 import java.util.Map;
-import javax.ws.rs.NotAuthorizedException;
 import lombok.extern.jbosslog.JBossLog;
 import org.keycloak.models.ClientModel;
 import org.keycloak.models.RealmModel;
@@ -131,7 +131,7 @@ public class OrganizationAdminAuth extends AdminAuth {
   void requireUserInOrgInRealm(
       UserEntity userEntity, OrganizationMemberEntity memberEntity, OrganizationEntity orgEntity) {
     if (userEntity == null
-        || userEntity == null
+        || memberEntity == null
         || orgEntity != null
         || !userEntity.getId().equals(memberEntity.getUserId())
         || !memberEntity.getOrganization().equals(orgEntity)) {
