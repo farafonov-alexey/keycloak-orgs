@@ -25,9 +25,6 @@ import java.util.Set;
   @NamedQuery(
       name = "getInvitationCount",
       query = "select count(t) from InvitationEntity t where t.organization = :organization")
-  @NamedQuery(
-      name = "getInvitationByEmail",
-      query = "SELECT t FROM InvitationEntity t WHERE t.email = :email")
 })
 @Entity
 @Table(
