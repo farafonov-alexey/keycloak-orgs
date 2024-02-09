@@ -180,37 +180,36 @@ public class UserResource extends OrganizationAdminResource {
             throw new NotAuthorizedException("Insufficient permissions");
         }
     }
-  }
-
-  @GET
-  @Path("/{userId}/orgs/invitations")
-  @Produces(MediaType.APPLICATION_JSON)
-  public Stream<Invitation> listUserOrgInvitations(
-    @PathParam("userId") String userId) {
-    log.debugv("Get user invitation for %s %s", realm.getName(), userId);
-
-    UserModel user = session.users().getUserById(realm, userId);
-    if (user != null) {
-      Stream<InvitationModel> inv = orgs.getUserInvitationsStream(realm, user);
-      return inv.map(r -> convertInvitationModelToInvitation(r));
-    } else {
-      throw new NotFoundException(String.format("User %s doesn't exist", userId));
-    }
-  }
-
-  /*
-  teams is on hold for now
 
     @GET
-    @Path("/{userId}/teams")
+    @Path("/{userId}/orgs/invitations")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listUserTeams(@PathParam("userId") String userId) {
-      log.debugv("Get team memberships for %s %s", realm.getName(), userId);
-      Teams teams =
-          mgr.getTeamsByUserId(userId).stream()
-              .map(e -> convertTeamEntityToTeam(e))
-              .collect(Collectors.toCollection(() -> new Teams()));
-      return Response.ok().entity(teams).build();
+    public Stream<Invitation> listUserOrgInvitations(
+        @PathParam("userId") String userId) {
+        log.debugv("Get user invitation for %s %s", realm.getName(), userId);
+
+        UserModel user = session.users().getUserById(realm, userId);
+        if (user != null) {
+        Stream<InvitationModel> inv = orgs.getUserInvitationsStream(realm, user);
+        return inv.map(r -> convertInvitationModelToInvitation(r));
+        } else {
+        throw new NotFoundException(String.format("User %s doesn't exist", userId));
+        }
     }
-    */
+
+    /*
+    teams is on hold for now
+
+        @GET
+        @Path("/{userId}/teams")
+        @Produces(MediaType.APPLICATION_JSON)
+        public Response listUserTeams(@PathParam("userId") String userId) {
+        log.debugv("Get team memberships for %s %s", realm.getName(), userId);
+        Teams teams =
+            mgr.getTeamsByUserId(userId).stream()
+                .map(e -> convertTeamEntityToTeam(e))
+                .collect(Collectors.toCollection(() -> new Teams()));
+        return Response.ok().entity(teams).build();
+        }
+        */
 }
